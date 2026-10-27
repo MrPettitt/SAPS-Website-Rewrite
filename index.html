@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SAPS | South African Police Service</title>
+<meta name="description" content="The South African Police Service: report a crime, find a station, apply for a police clearance certificate and explore careers in policing."/>
+<meta name="theme-color" content="#050F26"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#050F26; --surface:#0A1C45; --surface2:#0F2760; --blue:#1E56D6; --blue-soft:#8DB0FF;
+  --gold:#FDB913; --gold-soft:#FFD466; --text:#F2F5FC; --muted:#A3B4D8;
+  --red:#E03A3E; --green:#2DBE82; --line:rgba(255,255,255,.1); --line-gold:rgba(253,185,19,.35);
+  --pad:80px; --nav-h:72px;
+  --head:'Sora',system-ui,sans-serif; --body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 16px)}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-weight:400;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.icon{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.skip-link{position:absolute;left:16px;top:-60px;z-index:400;background:var(--gold);color:var(--bg);font-weight:700;padding:10px 18px;border-radius:10px;text-decoration:none;transition:top .2s}
+.skip-link:focus{top:12px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);background:rgba(5,15,38,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.emblem{width:44px;height:44px;flex-shrink:0}
+.brand-text{line-height:1.15}
+.brand-text strong{display:block;font-family:var(--head);font-size:20px;font-weight:800;letter-spacing:1.5px;color:var(--gold)}
+.brand-text span{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)}
+.nav-links{display:flex;gap:6px;list-style:none;align-items:center}
+.nav-links a{display:block;text-decoration:none;color:var(--text);font-size:13.5px;font-weight:500;padding:9px 14px;border-radius:8px;transition:background .2s,color .2s}
+.nav-links a:hover{background:rgba(255,255,255,.07)}
+.nav-links a.active{color:var(--gold)}
+.nav-links a.nav-emergency{background:var(--red);color:#fff;font-weight:700;margin-left:8px;display:inline-flex;align-items:center;gap:8px}
+.nav-links a.nav-emergency:hover{background:#f04a4e}
+.menu-toggle{display:none;width:44px;height:44px;border-radius:10px;cursor:pointer;background:rgba(255,255,255,.06);border:1px solid var(--line);align-items:center;justify-content:center;flex-direction:column;gap:5px}
+.menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;transition:transform .25s,opacity .25s}
+.menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* PAGES */
+main{padding-top:var(--nav-h)}
+.page{display:none}
+.page.active{display:block;animation:pageIn .45s ease both}
+@keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;border-radius:12px;font-size:14.5px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .2s,background .2s,border-color .2s,box-shadow .2s}
+.btn-primary{background:var(--gold);color:#1a1300}
+.btn-primary:hover{background:var(--gold-soft);transform:translateY(-2px);box-shadow:0 12px 30px rgba(253,185,19,.25)}
+.btn-outline{background:rgba(255,255,255,.04);color:var(--text);border-color:rgba(255,255,255,.22)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover{background:#f04a4e;transform:translateY(-2px)}
+.btn-sm{padding:10px 18px;font-size:13px;border-radius:10px}
+.btn-block{width:100%}
+
+/* TICKER */
+.ticker{background:var(--gold);padding:11px 0;overflow:hidden}
+.ticker-track{display:flex;width:max-content;animation:ticker 45s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-item{display:flex;align-items:center;gap:14px;padding:0 36px;font-size:12.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#1a1300;white-space:nowrap}
+.ticker-item::after{content:'';width:5px;height:5px;border-radius:50%;background:rgba(26,19,0,.45)}
+@keyframes ticker{to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+.sw{padding:104px var(--pad)}
+.bg2{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ey{display:flex;align-items:center;gap:12px;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.ey::before{content:'';width:28px;height:2px;background:var(--gold);border-radius:2px}
+.st{font-family:var(--head);font-size:clamp(30px,4vw,50px);font-weight:700;letter-spacing:-1px;line-height:1.1;margin-bottom:20px}
+.sl{color:var(--muted);max-width:640px;font-size:16.5px;line-height:1.8}
+
+/* HERO */
+#hero{min-height:min(100vh - var(--nav-h),820px);display:grid;grid-template-columns:1.15fr .85fr;position:relative;overflow:hidden}
+.hbg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 75% 45%,rgba(30,86,214,.35),transparent 65%),radial-gradient(ellipse 40% 40% at 10% 90%,rgba(253,185,19,.08),transparent 70%)}
+.hgl{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(141,176,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(141,176,255,.06) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at 40% 40%,#000 25%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse at 40% 40%,#000 25%,transparent 80%)}
+.hl{display:flex;flex-direction:column;justify-content:center;padding:72px 40px 72px var(--pad);position:relative;z-index:2}
+.hbadge{display:inline-flex;align-items:center;gap:10px;width:fit-content;border:1px solid var(--line-gold);background:rgba(253,185,19,.08);padding:7px 16px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.6px;color:var(--gold-soft);margin-bottom:30px}
+.hbadge::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 2s infinite}
+@keyframes blink{50%{opacity:.35}}
+.htitle{font-family:var(--head);font-size:clamp(44px,6.4vw,92px);font-weight:800;line-height:1;letter-spacing:-2.5px}
+.htitle span{display:block}
+.htitle .gold{color:var(--gold)}
+.hsub{font-size:18px;color:var(--muted);margin:26px 0 38px;max-width:500px}
+.hact{display:flex;gap:14px;flex-wrap:wrap}
+.hstats{display:flex;gap:48px;flex-wrap:wrap;margin-top:52px;padding-top:34px;border-top:1px solid var(--line)}
+.snum{font-family:var(--head);font-size:38px;font-weight:700;color:var(--gold);line-height:1;letter-spacing:-1px}
+.slbl{font-size:12.5px;color:var(--muted);margin-top:6px}
+.hr{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:40px}
+.shield-wrap{position:relative;width:min(340px,70vw)}
+.shield-wrap svg{width:100%;height:auto;filter:drop-shadow(0 30px 60px rgba(30,86,214,.45))}
+.ring{position:absolute;inset:-6%;border:1px solid var(--line-gold);border-radius:50%;animation:ring 5s ease-out infinite}
+.ring:nth-child(2){animation-delay:1.7s}.ring:nth-child(3){animation-delay:3.4s}
+@keyframes ring{0%{opacity:.7;transform:scale(.85)}100%{opacity:0;transform:scale(1.5)}}
+
+/* EMERGENCY */
+.emb{margin:64px var(--pad) 0;background:linear-gradient(135deg,#C62E32,#7d1519);border-radius:24px;padding:40px 48px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;position:relative;overflow:hidden}
+.emb::before{content:'';position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;border:44px solid rgba(255,255,255,.06)}
+.emtitle{font-family:var(--head);font-size:30px;font-weight:700;letter-spacing:-.5px;line-height:1.15}
+.emsub{color:rgba(255,255,255,.8);margin-top:8px;font-size:15px}
+.emnums{display:flex;gap:16px;position:relative;flex-wrap:wrap}
+.emn{text-decoration:none;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px 24px;text-align:center;transition:background .2s,transform .2s}
+.emn:hover{background:rgba(0,0,0,.35);transform:translateY(-2px)}
+.emn .num{font-family:var(--head);font-size:30px;font-weight:700;line-height:1.1;white-space:nowrap}
+.emn .lbl{font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-top:4px}
+
+/* CARDS */
+.svgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.svc{display:block;text-decoration:none;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:34px 30px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+.svc::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--blue-soft));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.svc:hover{transform:translateY(-5px);border-color:var(--line-gold);box-shadow:0 22px 50px rgba(0,0,0,.35)}
+.svc:hover::before{transform:scaleX(1)}
+.ico-box{width:54px;height:54px;border-radius:16px;background:rgba(253,185,19,.1);border:1px solid var(--line-gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:22px}
+.svname{font-family:var(--head);font-size:19px;font-weight:600;margin-bottom:10px;letter-spacing:-.2px}
+.svdesc{color:var(--muted);font-size:14.5px;line-height:1.7}
+.svlink{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:13.5px;font-weight:600;margin-top:22px;transition:gap .25s}
+.svc:hover .svlink{gap:14px}
+
+/* FORMS */
+.rg{display:grid;grid-template-columns:1.1fr .9fr;gap:72px;align-items:start}
+.rform{display:flex;flex-direction:column;gap:18px;margin-top:36px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ff{display:flex;flex-direction:column;gap:7px}
+.ff label{font-size:12.5px;font-weight:600;color:var(--muted)}
+.ff input,.ff select,.ff textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:13px 16px;font-family:var(--body);font-size:15px;transition:border-color .2s,box-shadow .2s}
+.ff input::placeholder,.ff textarea::placeholder{color:rgba(163,180,216,.5)}
+.ff input:focus,.ff select:focus,.ff textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(253,185,19,.18)}
+.ff select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23A3B4D8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.500l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+.ff select option{background:#0A1C45}
+.ff textarea{resize:vertical;min-height:120px}
+.ff.invalid input,.ff.invalid select,.ff.invalid textarea{border-color:#ff7a80}
+.err{display:none;font-size:12.5px;color:#ff9aa0}
+.ff.invalid .err{display:block}
+.form-status{display:none;padding:16px 20px;border-radius:12px;font-size:14.5px;line-height:1.6}
+.form-status.ok{display:block;background:rgba(45,190,130,.12);border:1px solid rgba(45,190,130,.35);color:#7fe0b6}
+.side-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px;margin-bottom:16px}
+.side-card h3{font-family:var(--head);font-size:18px;font-weight:600;margin-bottom:14px}
+.side-card.alert{border-color:rgba(224,58,62,.5);background:linear-gradient(135deg,rgba(224,58,62,.16),rgba(224,58,62,.04))}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:12px}
+.checklist li{display:flex;gap:12px;color:var(--muted);font-size:14.5px}
+.checklist li::before{content:'';flex-shrink:0;width:18px;height:18px;margin-top:3px;border-radius:50%;background:rgba(45,190,130,.18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232DBE82' stroke-width='3.500' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/11px no-repeat}
+
+/* NEWS */
+.ngrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px;margin-top:56px}
+.nc{text-align:left;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:20px;overflow:hidden;cursor:pointer;transition:border-color .3s,transform .3s;display:flex;flex-direction:column;padding:0}
+.nc:hover{border-color:var(--line-gold);transform:translateY(-4px)}
+.ncimg{height:170px;display:flex;align-items:center;justify-content:center;position:relative;color:rgba(255,255,255,.85);font-size:52px;background:linear-gradient(135deg,#123A99,#2A1B7A)}
+.nc:first-child .ncimg{height:250px}
+.nc:nth-child(2) .ncimg{background:linear-gradient(135deg,#0F4C6B,#123A99)}
+.nc:nth-child(3) .ncimg{background:linear-gradient(135deg,#6B3A0F,#B07A0A)}
+.ncimg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:30px 30px}
+.ncimg .icon{position:relative}
+.ncb{padding:26px;flex:1}
+.ntag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:rgba(253,185,19,.1);padding:5px 12px;border-radius:999px;margin-bottom:14px}
+.nhead{font-family:var(--head);font-size:17px;font-weight:600;line-height:1.4;margin-bottom:12px;letter-spacing:-.2px}
+.nc:first-child .nhead{font-size:22px}
+.nmeta{font-size:12.5px;color:var(--muted)}
+
+/* STATIONS */
+.stgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:72px;align-items:start}
+.search{position:relative;margin-top:32px}
+.search .icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:18px}
+.search input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:14px 16px 14px 46px;font-size:15px;font-family:var(--body)}
+.search input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(253,185,19,.18)}
+.stlist{margin-top:20px;list-style:none}
+.sti{display:grid;grid-template-columns:48px 1fr auto;gap:18px;align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
+.stn{font-family:var(--head);font-size:22px;font-weight:700;color:rgba(253,185,19,.4)}
+.stname{font-weight:600;font-size:16px}
+.starea{font-size:13px;color:var(--muted);margin-top:2px}
+.stact{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.chip{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid var(--line);color:var(--gold);transition:background .2s,border-color .2s}
+.chip:hover{background:rgba(253,185,19,.1);border-color:var(--line-gold)}
+.empty{color:var(--muted);padding:28px 0;display:none}
+.finder-card{background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--line-gold);border-radius:24px;padding:40px 34px;text-align:center;position:sticky;top:96px}
+.finder-card .ico-box{margin:0 auto 22px;width:68px;height:68px;font-size:32px;border-radius:20px}
+.finder-card h3{font-family:var(--head);font-size:22px;font-weight:700;margin-bottom:10px}
+.finder-card p{color:var(--muted);font-size:15px;margin-bottom:24px}
+.finder-card .btn+.btn{margin-top:12px}
+.finder-meta{margin-top:22px;font-size:13px;color:var(--muted)}
+
+/* LEADERSHIP */
+.lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:56px}
+.lc{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:30px 24px;text-align:center;transition:border-color .3s,transform .3s}
+.lc:hover{border-color:var(--line-gold);transform:translateY(-4px)}
+.lav{width:76px;height:76px;border-radius:50%;margin:0 auto 18px;background:linear-gradient(135deg,var(--surface2),var(--blue));border:2px solid var(--line-gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:30px}
+.lname{font-weight:600;font-size:16px;margin-bottom:4px}
+.ltitle{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px}
+.ldiv{font-size:13px;color:var(--muted)}
+
+/* INNER PAGES */
+.ih{padding:72px var(--pad) 72px;position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse 60% 90% at 85% 40%,rgba(30,86,214,.3),transparent 65%)}
+.ihc{display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center;position:relative}
+.crumb{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:500;text-decoration:none;margin-bottom:22px;transition:color .2s}
+.crumb:hover{color:var(--gold)}
+.ihico{width:120px;height:120px;border-radius:32px;background:rgba(253,185,19,.1);border:1px solid var(--line-gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:56px}
+.d2{display:grid;grid-template-columns:1.3fr .7fr;gap:64px;align-items:start}
+.db p{color:var(--muted);font-size:16px;line-height:1.85;margin-bottom:20px}
+.db h3{font-family:var(--head);font-size:22px;font-weight:700;letter-spacing:-.3px;margin:40px 0 18px;color:var(--text)}
+.db ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:24px}
+.db ul li{display:flex;gap:12px;color:var(--muted);font-size:15px}
+.db ul li::before{content:'';width:7px;height:7px;margin-top:9px;border-radius:2px;background:var(--gold);transform:rotate(45deg);flex-shrink:0}
+.ic{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;margin-bottom:16px}
+.ict{font-family:var(--head);font-size:16px;font-weight:600;margin-bottom:10px}
+.icb{color:var(--muted);font-size:14.5px;line-height:1.7}
+.icn{font-family:var(--head);font-size:34px;font-weight:700;color:var(--gold);letter-spacing:-.5px;margin:4px 0 8px;line-height:1.15}
+.icn a{text-decoration:none}
+.ps{margin-top:8px}
+.step{display:grid;grid-template-columns:56px 1fr;gap:20px;padding:24px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.stepn{font-family:var(--head);font-size:30px;font-weight:700;color:rgba(253,185,19,.55);line-height:1}
+.stept{font-weight:600;font-size:16px;margin-bottom:6px}
+.stepd{color:var(--muted);font-size:14.5px;line-height:1.7}
+.stepdu{font-size:12px;font-weight:600;color:var(--gold);margin-top:8px}
+.hbox{background:linear-gradient(135deg,rgba(253,185,19,.12),rgba(253,185,19,.03));border:1px solid var(--line-gold);border-left:4px solid var(--gold);border-radius:16px;padding:24px 28px;margin:32px 0}
+.hbox p{color:var(--text)!important;font-size:15px!important;line-height:1.8;margin:0!important}
+.ugrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.uc{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;transition:border-color .3s}
+.uc:hover{border-color:var(--line-gold)}
+.uc .ico-box{width:44px;height:44px;font-size:22px;border-radius:12px;margin-bottom:14px}
+.ucname{font-family:var(--head);font-size:15.5px;font-weight:600;margin-bottom:8px}
+.ucdesc{color:var(--muted);font-size:13.5px;line-height:1.65}
+.mini-list{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.mini-list li{display:flex;gap:10px;font-size:14px;color:var(--muted)}
+.mini-list li::before{content:'';width:6px;height:6px;margin-top:8px;border-radius:2px;background:var(--gold);transform:rotate(45deg);flex-shrink:0}
+.kv{display:flex;flex-direction:column;gap:2px;font-size:14px;color:var(--muted);margin-top:8px}
+.kv div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}
+.kv div:last-child{border-bottom:none}
+.kv strong{color:var(--text);font-weight:600;text-align:right}
+.cta-center{text-align:center}
+.cta-center .st{margin-bottom:16px}
+.cta-center p{color:var(--muted);margin-bottom:32px;font-size:16.5px}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* CAREERS */
+.chn{display:flex;gap:44px;margin-top:38px;flex-wrap:wrap}
+.cnum{font-family:var(--head);font-size:40px;font-weight:700;color:var(--gold);line-height:1;letter-spacing:-1px}
+.clbl{font-size:12.5px;color:var(--muted);margin-top:6px}
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.dc{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:32px;cursor:pointer;text-align:left;color:inherit;transition:border-color .3s,transform .3s;display:block;width:100%}
+.dc:hover{border-color:var(--line-gold);transform:translateY(-4px)}
+.dname{font-family:var(--head);font-size:19px;font-weight:600;margin-bottom:10px}
+.ddesc{color:var(--muted);font-size:14.5px;line-height:1.7;margin-bottom:16px}
+.dopen{font-size:13px;font-weight:600;color:var(--green)}
+.rqgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+.rqb{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:34px}
+.rqtitle{font-family:var(--head);font-size:19px;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.rqtitle .icon{color:var(--gold);font-size:24px}
+.rql{list-style:none;display:flex;flex-direction:column;gap:12px}
+.rql li{display:flex;gap:12px;color:var(--muted);font-size:14.5px}
+.rql li::before{content:'';flex-shrink:0;width:18px;height:18px;margin-top:3px;border-radius:50%;background:rgba(45,190,130,.18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232DBE82' stroke-width='3.500' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/11px no-repeat}
+.atl{position:relative;padding-left:44px;margin-top:40px}
+.atl::before{content:'';position:absolute;left:13px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tlstep{position:relative;padding-bottom:40px}
+.tlstep:last-child{padding-bottom:0}
+.tldot{position:absolute;left:-44px;top:0;width:28px;height:28px;border-radius:50%;background:var(--surface);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:12px;font-weight:700;color:var(--gold)}
+.tlt{font-weight:600;font-size:16.5px;margin-bottom:6px}
+.tld{color:var(--muted);font-size:14.5px;line-height:1.7}
+.tldu{font-size:12px;font-weight:600;color:var(--gold);margin-top:8px}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-top:40px}
+.filters .ff label{font-size:12px}
+.tbl-wrap{overflow-x:auto;margin-top:28px;border:1px solid var(--line);border-radius:20px;background:var(--bg)}
+.vtable{width:100%;border-collapse:collapse;min-width:760px}
+.vtable th{text-align:left;font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);padding:18px 22px;border-bottom:1px solid var(--line)}
+.vtable td{padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.06);font-size:14.5px;color:var(--muted)}
+.vtable tr:last-child td{border-bottom:none}
+.vtable tbody tr:hover td{background:rgba(255,255,255,.03)}
+.vt{color:var(--text)!important;font-weight:600!important}
+.vb{display:inline-block;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border-radius:999px}
+.vb.new{background:rgba(45,190,130,.15);color:#6fdcae;border:1px solid rgba(45,190,130,.35)}
+.vb.urgent{background:rgba(224,58,62,.16);color:#ff9aa0;border:1px solid rgba(224,58,62,.4)}
+.vb.open{background:rgba(253,185,19,.12);color:var(--gold);border:1px solid var(--line-gold)}
+.count{margin-top:16px;font-size:13.5px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin-top:18px}
+
+/* DIALOG */
+dialog{margin:auto;background:var(--surface);color:var(--text);border:1px solid var(--line-gold);border-radius:24px;padding:36px;width:min(560px,calc(100vw - 32px));box-shadow:0 40px 100px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(2,8,22,.75);backdrop-filter:blur(4px)}
+dialog h2{font-family:var(--head);font-size:24px;font-weight:700;letter-spacing:-.5px;margin:6px 0 12px;line-height:1.25}
+dialog p{color:var(--muted);font-size:15px;line-height:1.75;margin-bottom:22px}
+.dlg-actions{display:flex;gap:12px;flex-wrap:wrap}
+.dlg-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);cursor:pointer;font-size:20px;line-height:1}
+.dlg-close:hover{border-color:var(--gold);color:var(--gold)}
+
+/* FOOTER */
+footer{background:#030a1a;border-top:1px solid var(--line);padding:72px var(--pad) 32px}
+.fg{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;margin-bottom:52px}
+.fa p{color:var(--muted);font-size:14.5px;margin-top:18px;line-height:1.8;max-width:340px}
+.fc h4{font-size:12.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.fc a{color:var(--muted);font-size:14px;text-decoration:none;transition:color .2s}
+.fc a:hover{color:#fff}
+.fb{padding-top:30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.fb p{color:var(--muted);font-size:13px}
+.flag{display:flex;height:20px;width:44px;border-radius:3px;overflow:hidden}
+.flag i{display:block;flex:1}
+.to-top{position:fixed;right:24px;bottom:24px;z-index:150;width:46px;height:46px;border-radius:14px;background:var(--gold);color:#1a1300;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 10px 28px rgba(253,185,19,.35);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .25s,transform .25s}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top .icon{stroke-width:2.4}
+
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(253,185,19,.55);border-radius:4px}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+@media (max-width:1180px){
+  :root{--pad:40px}
+  .menu-toggle{display:flex}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:rgba(5,15,38,.98);border-bottom:1px solid var(--line);padding:10px var(--pad) 24px;transform:translateY(-120%);opacity:0;visibility:hidden;transition:transform .3s,opacity .3s,visibility .3s;max-height:calc(100vh - var(--nav-h));overflow-y:auto}
+  .nav-links.open{transform:none;opacity:1;visibility:visible}
+  .nav-links a{padding:15px 4px;font-size:16px;border-radius:0;border-bottom:1px solid var(--line)}
+  .nav-links a.nav-emergency{margin:16px 0 0;justify-content:center;border-radius:12px;border:none}
+  #hero{grid-template-columns:1fr}
+  .hr{display:none}
+  .hl{padding:64px var(--pad)}
+  .emb{grid-template-columns:1fr}
+  .svgrid,.dgrid{grid-template-columns:1fr 1fr}
+  .rg,.stgrid,.d2{grid-template-columns:1fr;gap:48px}
+  .finder-card{position:static}
+  .ngrid{grid-template-columns:1fr}
+  .lgrid{grid-template-columns:1fr 1fr}
+  .fg{grid-template-columns:1fr 1fr}
+  .ihc{grid-template-columns:1fr}
+  .ihico{display:none}
+}
+@media (max-width:720px){
+  :root{--pad:20px}
+  .sw{padding:72px var(--pad)}
+  .svgrid,.dgrid,.rqgrid,.ugrid,.lgrid,.fg,.fr,.filters{grid-template-columns:1fr}
+  .emb{padding:30px 24px;margin-top:40px}
+  .emn{flex:1 1 100%}
+  .hstats{gap:28px}
+  .hact .btn{flex:1 1 100%}
+  .sti{grid-template-columns:36px 1fr}
+  .stact{grid-column:2;justify-content:flex-start}
+  .brand-text span{font-size:9px;letter-spacing:.8px}
+  dialog{padding:28px 22px}
+  .cnum{font-size:32px}
+  .chn{gap:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- ICON SPRITE -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.500-3.200 8-8 9-4.800-1-8-4.500-8-9V6l8-3z"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.500 10.900c.6.500 1 1.200 1 2.100h5c0-.9.400-1.600 1-2.100A6 6 0 0012 3z"/></symbol>
+    <symbol id="i-scales" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 7a3 3 0 006 0L5 7zM19 7l-3 7a3 3 0 006 0l-3-7z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.500"/><path d="M2 20c0-3.500 3-6 7-6s7 2.500 7 6M17 5a3.500 3.500 0 010 7M22 20c0-2.800-1.800-4.800-4.500-5.600"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.700 5.800 6.300.8-4.600 4.300 1.200 6.300L12 17.200 6.400 20.200l1.200-6.300L3 9.600l6.300-.8L12 3z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.200 7-11a7 7 0 10-14 0c0 4.800 7 11 7 11z"/><circle cx="12" cy="10" r="2.500"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 20h20"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.500 9.500A2 2 0 006.200 21h11.600a2 2 0 001.700-2.500L14 9V3M7.500 15h9"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M14.500 9.500c-.5-1-1.500-1.500-2.500-1.500-1.500 0-2.500.8-2.500 2 0 3 5 1.500 5 4.500 0 1.200-1 2-2.500 2-1.100 0-2.100-.5-2.600-1.500M12 6v2M12 16v2"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.200"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-siren" viewBox="0 0 24 24"><path d="M7 18v-6a5 5 0 0110 0v6M5 18h14v3H5zM12 2v2M4.500 5.500L6 7M19.500 5.500L18 7"/></symbol>
+    <symbol id="i-heli" viewBox="0 0 24 24"><path d="M3 5h18M12 5v4M5 14a7 5 0 0114 0v1H5v-1zM16 15v3M8 19h10"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 9c2.500-2 4.500-2 7 0s4.500 2 7 0 4-2 6 0M2 15c2.500-2 4.500-2 7 0s4.500 2 7 0 4-2 6 0"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-8-5.300-8-11a4.500 4.500 0 018-2.800A4.500 4.500 0 0120 10c0 5.700-8 11-8 11z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 118 0v3"/></symbol>
+    <symbol id="i-news" viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 01-2-2V5zM17 9h3v8a2 2 0 01-2 2M7 9h7M7 13h7"/></symbol>
+    <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 10v4h3l8 4V6L6 10H3zM18 9c1.500 1 1.500 5 0 6"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h4"/></symbol>
+    <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6 8v8M3 10v4M18 8v8M21 10v4M6 12h12"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3zM12 10v5M12 18h.01"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </defs>
+</svg>
+
+<a href="#main" class="skip-link" id="skipLink">Skip to content</a>
+
+<!-- NAV -->
+<nav aria-label="Main">
+  <a href="#home" class="brand" aria-label="SAPS home">
+    <svg class="emblem" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="eg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD466"/><stop offset="1" stop-color="#FDB913"/></linearGradient></defs><path d="M32 3l24 8v17c0 14-10 25-24 33C18 53 8 42 8 28V11l24-8z" fill="url(#eg)"/><path d="M32 12l3.600 8.500 9.200.8-7 6 2.200 9L32 31.500 24 36.300l2.200-9-7-6 9.200-.8L32 12z" fill="#0A1C45"/></svg>
+    <div class="brand-text"><strong>SAPS</strong><span>South African Police Service</span></div>
+  </a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" data-nav="home">Home</a></li>
+    <li><a href="#services" data-nav="services">Services</a></li>
+    <li><a href="#report" data-nav="report">Report Crime</a></li>
+    <li><a href="#news" data-nav="news">News</a></li>
+    <li><a href="#stations" data-nav="stations">Stations</a></li>
+    <li><a href="#careers" data-nav="careers">Careers</a></li>
+    <li><a class="nav-emergency" href="tel:10111"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>10111</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+<!-- ========== HOME ========== -->
+<div class="page" id="page-home" data-title="SAPS | South African Police Service">
+  <section id="hero">
+    <div class="hbg"></div><div class="hgl"></div>
+    <div class="hl">
+      <div class="hbadge">Active nationwide operations</div>
+      <h1 class="htitle"><span>Serve.</span><span class="gold">Protect.</span><span>Advance.</span></h1>
+      <p class="hsub">Building a safer South Africa through excellence in policing, community partnership and an unwavering commitment to justice.</p>
+      <div class="hact">
+        <a href="#report" class="btn btn-primary">Report a Crime <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a href="#stations" class="btn btn-outline">Find a Station</a>
+      </div>
+      <div class="hstats">
+        <div><div class="snum"><span class="count-up" data-target="1154">1,154</span></div><div class="slbl">Police stations</div></div>
+        <div><div class="snum"><span class="count-up" data-target="192">192</span>K</div><div class="slbl">Officers deployed</div></div>
+        <div><div class="snum"><span class="count-up" data-target="9">9</span></div><div class="slbl">Provincial divisions</div></div>
+      </div>
+    </div>
+    <div class="hr">
+      <div class="shield-wrap">
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        <svg viewBox="0 0 300 360" role="img" aria-label="SAPS shield">
+          <defs>
+            <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E56D6"/><stop offset="1" stop-color="#0A1C45"/></linearGradient>
+            <linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD466"/><stop offset="1" stop-color="#FDB913"/></linearGradient>
+          </defs>
+          <path d="M150 8l132 44v118c0 84-58 142-132 182C76 312 18 254 18 170V52L150 8z" fill="url(#sg2)"/>
+          <path d="M150 28l112 38v104c0 72-48 122-112 158-64-36-112-86-112-158V66l112-38z" fill="url(#sg1)"/>
+          <path d="M150 74l17 40 43 4-33 28 10 42-37-22-37 22 10-42-33-28 43-4 17-40z" fill="url(#sg2)"/>
+          <text x="150" y="232" text-anchor="middle" font-family="Sora,sans-serif" font-weight="800" font-size="34" letter-spacing="4" fill="#FFD466">SAPS</text>
+          <text x="150" y="258" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" letter-spacing="3" fill="#A3B4D8">EST. 1995</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item">Emergency: 10111</span>
+    <span class="ticker-item">Crime Stop: 08600 10111</span>
+    <span class="ticker-item">GBV Command Centre: 0800 428 428</span>
+    <span class="ticker-item">Child Protection: 116</span>
+    <span class="ticker-item">Missing Persons: 08600 10111</span>
+    <span class="ticker-item">Cell phone emergency: 112</span>
+  </div></div>
+
+  <div class="emb">
+    <div><div class="emtitle">Emergency numbers</div><div class="emsub">Available 24 hours a day, 7 days a week, 365 days a year. Tap a number to call.</div></div>
+    <div class="emnums">
+      <a class="emn" href="tel:10111"><div class="num">10111</div><div class="lbl">Police emergency</div></a>
+      <a class="emn" href="tel:112"><div class="num">112</div><div class="lbl">Cell emergency</div></a>
+      <a class="emn" href="tel:0860010111"><div class="num">08600 10111</div><div class="lbl">Crime Stop</div></a>
+    </div>
+  </div>
+
+  <div class="sw bg2" id="services" style="margin-top:64px">
+    <div class="ey">What we do</div>
+    <h2 class="st">Our services</h2>
+    <p class="sl">Comprehensive policing services designed to protect every South African and uphold the rule of law.</p>
+    <div class="svgrid">
+      <a class="svc" href="#detective"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></div><div class="svname">Criminal Investigation</div><div class="svdesc">Detective services investigate serious crimes including murder, robbery, fraud and cybercrime with professional expertise.</div><span class="svlink">Learn more <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="svc" href="#visible"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg></div><div class="svname">Visible Policing</div><div class="svdesc">Uniformed patrol officers maintain order, respond to emergencies and provide a visible deterrent to criminal activity.</div><span class="svlink">Learn more <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="svc" href="#intelligence"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></div><div class="svname">Crime Intelligence</div><div class="svdesc">Gathering and analysing information to prevent crime before it happens, protecting communities proactively.</div><span class="svlink">Learn more <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="svc" href="#legal"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-scales"/></svg></div><div class="svname">Legal Services</div><div class="svdesc">Access legal assistance, understand your rights and get guidance on the criminal justice system.</div><span class="svlink">Learn more <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="svc" href="#community"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></div><div class="svname">Community Policing</div><div class="svdesc">Working hand in hand with communities through CPFs to build safer neighbourhoods from the ground up.</div><span class="svlink">Learn more <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="svc" href="#clearance"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></div><div class="svname">Clearance Certificates</div><div class="svdesc">Apply for police clearance certificates for employment, immigration, travel and adoption purposes.</div><span class="svlink">Learn more <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+    </div>
+  </div>
+
+  <div class="sw" id="report">
+    <div class="rg">
+      <div>
+        <div class="ey">Tip line</div><h2 class="st">Report a crime</h2>
+        <p class="sl">Your information stays confidential. Help us keep your community safe by reporting suspicious activity or crimes.</p>
+        <form class="rform" id="reportForm" novalidate>
+          <div class="fr">
+            <div class="ff"><label for="rname">Your name (optional)</label><input id="rname" name="name" type="text" placeholder="Anonymous reporting accepted" autocomplete="name"/></div>
+            <div class="ff"><label for="rphone">Contact number (optional)</label><input id="rphone" name="phone" type="tel" placeholder="+27 00 000 0000" autocomplete="tel"/></div>
+          </div>
+          <div class="fr">
+            <div class="ff"><label for="rtype">Crime type</label><select id="rtype" name="type" required><option value="">Select crime category</option><option>Assault / GBV</option><option>Burglary / Robbery</option><option>Drug related</option><option>Fraud / Corruption</option><option>Murder</option><option>Sexual offences</option><option>Vehicle crime</option><option>Other</option></select><span class="err">Please choose a crime category.</span></div>
+            <div class="ff"><label for="rloc">Location / area</label><input id="rloc" name="loc" type="text" placeholder="Suburb, city, province" required/><span class="err">Please tell us where this happened.</span></div>
+          </div>
+          <div class="ff"><label for="rdesc">Incident description</label><textarea id="rdesc" name="desc" placeholder="Describe what happened or what you observed. Include dates, times and any other relevant details." required></textarea><span class="err">Please describe the incident (at least 20 characters).</span></div>
+          <button type="submit" class="btn btn-primary">Submit report <svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg></button>
+          <div class="form-status" id="reportStatus" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+      <aside>
+        <div class="side-card alert">
+          <h3>In danger right now?</h3>
+          <p class="icb" style="margin-bottom:18px">Do not use this form for emergencies. Call the police immediately.</p>
+          <a href="tel:10111" class="btn btn-danger btn-block"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Call 10111</a>
+        </div>
+        <div class="side-card">
+          <h3>Before you submit</h3>
+          <ul class="checklist">
+            <li>Include the place, date and time if you know them</li>
+            <li>Describe people and vehicles without confronting anyone</li>
+            <li>Never put yourself at risk to gather information</li>
+            <li>You can report anonymously, no name is required</li>
+          </ul>
+        </div>
+        <div class="side-card">
+          <h3>Other ways to report</h3>
+          <div class="kv"><div><span>Crime Stop (anonymous)</span><strong><a href="tel:0860010111" style="text-decoration:none">08600 10111</a></strong></div><div><span>GBV Command Centre</span><strong><a href="tel:0800428428" style="text-decoration:none">0800 428 428</a></strong></div><div><span>Any police station</span><strong><a href="#stations" style="text-decoration:none">Find one</a></strong></div></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="sw bg2" id="news">
+    <div class="ey">Latest updates</div><h2 class="st">News and operations</h2>
+    <div class="ngrid" id="newsGrid"></div>
+  </div>
+
+  <div class="sw" id="stations">
+    <div class="stgrid">
+      <div>
+        <div class="ey">Near you</div><h2 class="st">Police stations</h2>
+        <p class="sl">Find your nearest police station across all nine provinces of South Africa.</p>
+        <div class="search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="stationSearch" type="search" placeholder="Search by station, city or province" aria-label="Search police stations"/></div>
+        <ul class="stlist" id="stationList"></ul>
+        <p class="empty" id="stationEmpty">No stations match your search. Try a city or province name.</p>
+      </div>
+      <div class="finder-card">
+        <div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-map"/></svg></div>
+        <h3>Station near you</h3>
+        <p>Open a live map to see the closest SAPS stations to your current location.</p>
+        <a class="btn btn-primary btn-block" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=SAPS+police+station+near+me">Open map <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <div class="finder-meta">All 9 provinces · 1,154 stations</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sw bg2" id="leadership">
+    <div class="ey">Command structure</div><h2 class="st">Leadership</h2>
+    <div class="lgrid">
+      <div class="lc"><div class="lav"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></div><div class="lname">National Commissioner</div><div class="ltitle">Executive head</div><div class="ldiv">SAPS Head Office</div></div>
+      <div class="lc"><div class="lav"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg></div><div class="lname">Deputy Commissioner</div><div class="ltitle">Visible Policing</div><div class="ldiv">National operations</div></div>
+      <div class="lc"><div class="lav"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></div><div class="lname">Deputy Commissioner</div><div class="ltitle">Crime Detection</div><div class="ldiv">Detective services</div></div>
+      <div class="lc"><div class="lav"><svg class="icon" aria-hidden="true"><use href="#i-briefcase"/></svg></div><div class="lname">Deputy Commissioner</div><div class="ltitle">Management Services</div><div class="ldiv">Human resources</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CAREERS ========== -->
+<div class="page" id="page-careers" data-title="Careers | SAPS">
+  <div class="ih"><div class="ihc"><div>
+    <a class="crumb" href="#home"><svg class="icon" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg>Back to home</a>
+    <div class="ey">Join the force</div>
+    <h1 class="st">Career opportunities</h1>
+    <p class="sl">Serve your country, protect your community and build a meaningful career with the South African Police Service. We are always looking for dedicated, disciplined and courageous people.</p>
+    <div class="chn">
+      <div><div class="cnum">3,200+</div><div class="clbl">Open positions</div></div>
+      <div><div class="cnum">R8,546</div><div class="clbl">Starting salary</div></div>
+      <div><div class="cnum">6 months</div><div class="clbl">Basic training</div></div>
+      <div><div class="cnum">9</div><div class="clbl">Provinces</div></div>
+    </div>
+  </div><div class="ihico"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg></div></div></div>
+
+  <div class="sw">
+    <div class="ey">Where you'll serve</div><h2 class="st">Choose your division</h2>
+    <div class="dgrid">
+      <button class="dc" data-division="Visible Policing"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg></div><div class="dname">Visible Policing</div><div class="ddesc">Patrol officers are the backbone of SAPS: uniformed, community-facing and first to respond. Serve in sector policing, rapid response and K9 units.</div><div class="dopen">1,400 openings nationwide</div></button>
+      <button class="dc" data-division="Detective Services"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></div><div class="dname">Detective Services</div><div class="ddesc">Investigate murders, robberies, sexual offences, fraud and cybercrime. Work in specialised units like the Hawks, DPCI and Family Violence units.</div><div class="dopen">620 openings nationwide</div></button>
+      <button class="dc" data-division="Crime Intelligence"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></div><div class="dname">Crime Intelligence</div><div class="ddesc">Gather, analyse and act on intelligence to prevent crime. Roles span covert operations, analysis, counter-terrorism and organised crime.</div><div class="dopen">180 openings nationwide</div></button>
+      <button class="dc" data-division="Tactical Response"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-siren"/></svg></div><div class="dname">Tactical Response</div><div class="ddesc">Join the Special Task Force, National Intervention Unit or Public Order Policing for high-risk operations requiring advanced tactical training.</div><div class="dopen">95 openings nationwide</div></button>
+      <button class="dc" data-division="Corporate Services"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-briefcase"/></svg></div><div class="dname">Administration and Support</div><div class="ddesc">Finance, HR, legal, information technology and logistics roles supporting the entire SAPS operation behind the scenes.</div><div class="dopen">740 openings nationwide</div></button>
+      <button class="dc" data-division="Forensic Services"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-flask"/></svg></div><div class="dname">Forensic Services</div><div class="ddesc">Crime scene management, ballistics, DNA analysis, pathology and digital forensics. Science at the frontline of justice.</div><div class="dopen">165 openings nationwide</div></button>
+    </div>
+    <p class="note">Select a division to filter the current vacancies below.</p>
+  </div>
+
+  <div class="sw bg2">
+    <div class="ey">Eligibility</div><h2 class="st">Requirements</h2>
+    <p class="sl">To join the South African Police Service as a trainee constable or civilian employee, applicants must meet the following minimum criteria.</p>
+    <div class="rqgrid">
+      <div class="rqb"><div class="rqtitle"><svg class="icon" aria-hidden="true"><use href="#i-clipboard"/></svg>General requirements</div><ul class="rql"><li>South African citizen with valid ID document or smart card</li><li>Minimum age of 18 years; maximum age of 30 years at date of application</li><li>Matric / Grade 12 certificate or equivalent NQF Level 4 qualification</li><li>No prior criminal record or pending criminal charges</li><li>Proficiency in at least two official languages of South Africa</li><li>Valid driver's licence (Code B minimum) is advantageous</li><li>Must be willing to be deployed anywhere in South Africa</li></ul></div>
+      <div class="rqb"><div class="rqtitle"><svg class="icon" aria-hidden="true"><use href="#i-dumbbell"/></svg>Physical and medical</div><ul class="rql"><li>Pass a comprehensive medical examination by a SAPS-approved doctor</li><li>Pass a physical fitness assessment (includes 2.4km run, sit-ups, push-ups)</li><li>Eyesight correctable to 6/6 with lenses; no colour blindness</li><li>No physical disability that would prevent execution of policing duties</li><li>Psychological fitness assessment and psychometric evaluation</li><li>Drug and alcohol screening test, with negative results required</li><li>Fingerprint clearance and security vetting process</li></ul></div>
+    </div>
+    <div class="hbox"><p>SAPS is an equal opportunity employer and encourages applications from women, persons with disabilities and all designated groups as defined in the Employment Equity Act. Preference will be given to previously disadvantaged individuals in line with the SAPS Employment Equity Plan.</p></div>
+  </div>
+
+  <div class="sw">
+    <div class="ey">How to apply</div><h2 class="st">Application process</h2>
+    <div class="d2">
+      <div>
+        <p class="sl">From your first application to your first day on patrol, here is the complete journey to becoming a SAPS officer.</p>
+        <div class="atl">
+          <div class="tlstep"><div class="tldot">1</div><div class="tlt">Online application</div><div class="tld">Complete the Z83 application form online or at your nearest police station. Attach certified copies of your ID, Matric certificate and any additional qualifications.</div><div class="tldu">Deadline: rolling admissions</div></div>
+          <div class="tlstep"><div class="tldot">2</div><div class="tlt">Screening and shortlisting</div><div class="tld">Your application is reviewed against minimum requirements. Shortlisted candidates are notified via email and SMS within 8 weeks of the application closing date.</div><div class="tldu">Duration: 6 to 8 weeks</div></div>
+          <div class="tlstep"><div class="tldot">3</div><div class="tlt">Fitness and medical testing</div><div class="tld">Attend your designated test centre for a physical fitness assessment, full medical examination, psychometric testing and drug screening.</div><div class="tldu">Duration: 1 to 2 days</div></div>
+          <div class="tlstep"><div class="tldot">4</div><div class="tlt">Vetting and background checks</div><div class="tld">SAPS conducts thorough criminal record checks, security vetting and reference verification. All results are treated as confidential.</div><div class="tldu">Duration: 4 to 6 weeks</div></div>
+          <div class="tlstep"><div class="tldot">5</div><div class="tlt">Acceptance and placement</div><div class="tld">Successful candidates receive a formal offer of placement at one of the SAPS training colleges across South Africa.</div><div class="tldu">Notification: written offer letter</div></div>
+          <div class="tlstep"><div class="tldot">6</div><div class="tlt">Basic training college</div><div class="tld">Complete a 6 month residential training programme covering law, firearms, tactical policing, community relations and physical training.</div><div class="tldu">Duration: 6 months residential</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="ic"><div class="ict">Starting salary</div><div class="icn">R8,546/pm</div><div class="icb">PERSAL notch 1. Increases with rank and years of service. Full government benefits included.</div></div>
+        <div class="ic"><div class="ict">Training colleges</div><div class="kv"><div><span>Pretoria (HQ)</span><strong>Gauteng</strong></div><div><span>Paarl Training College</span><strong>Western Cape</strong></div><div><span>Hammanskraal</span><strong>Gauteng</strong></div><div><span>Chatsworth College</span><strong>KwaZulu-Natal</strong></div><div><span>Graaff-Reinet</span><strong>Eastern Cape</strong></div></div></div>
+        <div class="ic"><div class="ict">Benefits package</div><ul class="mini-list"><li>Medical aid</li><li>Pension fund</li><li>Bursary access</li><li>Housing allowance</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sw bg2" id="vacancies">
+    <div class="ey">Open positions</div><h2 class="st">Current vacancies</h2>
+    <div class="filters">
+      <div class="ff"><label for="vSearch">Search</label><input id="vSearch" type="search" placeholder="e.g. analyst, constable, K9"/></div>
+      <div class="ff"><label for="vDiv">Division</label><select id="vDiv"><option value="">All divisions</option></select></div>
+      <div class="ff"><label for="vProv">Province</label><select id="vProv"><option value="">All provinces</option></select></div>
+    </div>
+    <div class="tbl-wrap"><table class="vtable">
+      <thead><tr><th scope="col">Position</th><th scope="col">Division</th><th scope="col">Province</th><th scope="col">Closing date</th><th scope="col">Status</th><th scope="col"><span class="sr-only" style="position:absolute;left:-9999px">Action</span></th></tr></thead>
+      <tbody id="vacBody"></tbody>
+    </table></div>
+    <p class="count" id="vacCount" aria-live="polite"></p>
+    <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap">
+      <a class="btn btn-primary" href="https://www.saps.gov.za/" target="_blank" rel="noopener">Apply on the official site <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-outline" href="https://www.dpsa.gov.za/" target="_blank" rel="noopener">Z83 form (DPSA)</a>
+    </div>
+    <p class="note">Vacancies shown are illustrative for this redesign. Always confirm current openings on the official SAPS website.</p>
+  </div>
+</div>
+
+<!-- ========== CRIMINAL INVESTIGATION ========== -->
+<div class="page" id="page-detective" data-title="Criminal Investigation | SAPS">
+  <div class="ih"><div class="ihc"><div>
+    <a class="crumb" href="#home"><svg class="icon" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg>Back to home</a>
+    <div class="ey">Detective services</div><h1 class="st">Criminal investigation</h1>
+    <p class="sl">SAPS Detective Services investigates all crime categories, from contact crime to complex financial fraud, using modern forensic and investigative methods.</p>
+  </div><div class="ihico"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></div></div></div>
+  <div class="sw"><div class="d2">
+    <div class="db">
+      <p>The Directorate for Priority Crime Investigation (DPCI), commonly known as the Hawks, and the broader SAPS Detective Services division form the backbone of criminal investigation in South Africa. Their mandate is to investigate, prevent and combat all forms of serious, organised and priority crime.</p>
+      <p>Detectives work in close collaboration with forensic experts, prosecutors from the National Prosecuting Authority and international partners like Interpol to build cases that hold up in court.</p>
+      <h3>Specialised units</h3>
+      <div class="ugrid">
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></div><div class="ucname">The Hawks (DPCI)</div><div class="ucdesc">Investigates serious organised crime, corruption and complex financial crimes at a national level.</div></div>
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></div><div class="ucname">FCS Unit</div><div class="ucdesc">Family Violence, Child Protection and Sexual Offences: dedicated specialists for gender-based and child crimes.</div></div>
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-laptop"/></svg></div><div class="ucname">Cybercrime Unit</div><div class="ucdesc">Tackles digital fraud, online scams, dark web activity, ransomware and cyberterrorism.</div></div>
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-flask"/></svg></div><div class="ucname">LCRC (Forensics)</div><div class="ucdesc">Local Criminal Record Centre handles crime scene processing, fingerprinting and evidence management.</div></div>
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-coin"/></svg></div><div class="ucname">Commercial Crime</div><div class="ucdesc">Fraud, money laundering, tax evasion, Ponzi schemes and corporate corruption investigations.</div></div>
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-target"/></svg></div><div class="ucname">Organised Crime</div><div class="ucdesc">Gang violence, drug syndicates, human trafficking and cross-border criminal networks.</div></div>
+      </div>
+      <h3>How to assist an investigation</h3>
+      <ul><li>Preserve evidence: do not move or touch items at a crime scene</li><li>Write down everything you remember as soon as possible after the incident</li><li>Obtain witness contact details if it is safe to do so</li><li>Report via the 10111 emergency line or visit your nearest station</li><li>Use the anonymous Crime Stop tip line: 08600 10111</li></ul>
+    </div>
+    <div>
+      <div class="ic"><div class="ict">Report a crime</div><div class="icn"><a href="tel:10111">10111</a></div><div class="icb">Emergency police line, available 24/7. For non-emergency detective matters, visit your nearest station and ask to speak to the duty detective.</div></div>
+      <div class="ic"><div class="ict">Anonymous tips</div><div class="icn"><a href="tel:0860010111">08600 10111</a></div><div class="icb">Crime Stop tip line. Your identity is protected. You may also use the <a href="#report" style="color:var(--gold)">online tip form</a>.</div></div>
+      <div class="ic"><div class="ict">Case tracking</div><div class="icb">Once a case docket is opened, you will receive a CAS (Crime Administration System) number. Use this to follow up with the investigating officer assigned to your case.</div></div>
+      <div class="ic"><div class="ict">Victim support</div><div class="icb">SAPS Victim-Friendly Rooms are available at most stations for private, trauma-informed interviews. Social workers and counsellors are on standby.</div></div>
+    </div>
+  </div></div>
+  <div class="sw bg2 cta-center"><h2 class="st">Need help now?</h2><p>Our detectives are available around the clock. Don't wait, every minute counts.</p><div class="cta-row"><a class="btn btn-primary" href="#report">Report a crime online</a><a class="btn btn-outline" href="#home">Back to home</a></div></div>
+</div>
+
+<!-- ========== VISIBLE POLICING ========== -->
+<div class="page" id="page-visible" data-title="Visible Policing | SAPS">
+  <div class="ih"><div class="ihc"><div>
+    <a class="crumb" href="#home"><svg class="icon" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg>Back to home</a>
+    <div class="ey">Patrol and response</div><h1 class="st">Visible policing</h1>
+    <p class="sl">Uniformed officers are the most immediate face of the SAPS: on patrol, in your streets and first on scene. Their presence deters crime and provides immediate community safety.</p>
+  </div><div class="ihico"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg></div></div></div>
+  <div class="sw"><div class="d2">
+    <div class="db">
+      <p>Visible Policing forms the operational frontline of SAPS. Officers in uniform conduct foot patrols, vehicle patrols, roadblocks and rapid response operations across all 1,154 police stations in South Africa.</p>
+      <p>The sector policing model divides communities into manageable geographic sectors, each assigned a dedicated team of officers who get to know the residents, local businesses and recurring crime patterns in their area.</p>
+      <h3>What we do</h3>
+      <ul><li>24/7 patrol operations across all nine provinces</li><li>Rapid response to emergency calls received via 10111</li><li>Roadblocks and vehicle checkpoints to combat vehicle crime</li><li>Sector policing with dedicated officers per community zone</li><li>Crime prevention operations, raids and stop-and-search actions</li><li>Crowd management and public order policing at events</li><li>Border policing at ports of entry and land borders</li></ul>
+      <h3>Specialised units</h3>
+      <div class="ugrid">
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></div><div class="ucname">K9 Unit</div><div class="ucdesc">Trained police dogs for drug detection, tracking suspects and crowd control. Highly effective in search operations.</div></div>
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-heli"/></svg></div><div class="ucname">Air Wing</div><div class="ucdesc">Helicopter surveillance and pursuit operations supporting ground units across provinces.</div></div>
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg></div><div class="ucname">Reaction Unit</div><div class="ucdesc">High-speed motorcycle and vehicle rapid response teams for urban hot spots.</div></div>
+        <div class="uc"><div class="ico-box"><svg class="icon" aria-hidden="true"><use href="#i-wave"/></svg></div><div class="ucname">Marine Unit</div><div class="ucdesc">Patrols South Africa's coastline, rivers and harbours to prevent smuggling and maritime crime.</div></div>
+      </div>
+      <div class="hbox"><p>The National Rural Safety Strategy deploys visible policing teams to farming communities and rural areas to address farm attacks, stock theft and rural violence, ensuring no community is left behind.</p></div>
+    </div>
+    <div>
+      <div class="ic"><div class="ict">See something, say something</div><div class="icn"><a href="tel:10111">10111</a></div><div class="icb">Call immediately if you witness a crime in progress, a suspicious person or an emergency situation.</div></div>
+      <div class="ic"><div class="ict">Sector policing</div><div class="icb">Each SAPS station divides its jurisdiction into sectors. Your sector officer is your first point of contact. Visit your local station to find out who your sector officer is and how to reach them directly.</div></div>
+      <div class="ic"><div class="ict">Officer identification</div><div class="icb">All SAPS officers on duty must carry and present their SAPS appointment certificate upon request. Uniform officers display their force number on their epaulettes at all times.</div></div>
+      <div class="ic"><div class="ict">Complaints about officers</div><div class="icb">Complaints about officer conduct are handled by the Independent Police Investigative Directorate (IPID). Contact IPID on <a href="tel:0800587743" style="color:var(--gold)">0800 587 743</a> (toll-free).</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ========== CRIME INTELLIGENCE ========== -->
+<div class="page" id="page-intelligence" data-title="Crime Intelligence | SAPS">
+  <div class="ih"><div class="ihc"><div>
+    <a class="crumb" href="#home"><svg class="icon" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg>Back to home</a>
+    <div class="ey">Prevention through knowledge</div><h1 class="st">Crime intelligence</h1>
+    <p class="sl">Crime Intelligence is the SAPS covert arm: gathering information, disrupting threats before they materialise and supporting investigations with actionable intelligence.</p>
+  </div><div class="ihico"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></div></div></div>
+  <div class="sw"><div class="d2">
+    <div class="db">
+      <p>The SAPS Crime Intelligence Division operates under the strictest confidentiality. Its primary mission is to collect, collate, evaluate and analyse crime-related information to provide intelligence products that support crime prevention, detection and the disruption of criminal networks.</p>
+      <p>Intelligence operatives work across all crime categories, from gang-related violence in the Cape Flats to cross-border drug syndicates and domestic terrorism threats. The division also supports the priority crime investigation work of the Hawks.</p>
+      <h3>The intelligence cycle</h3>
+      <div class="ps">
+        <div class="step"><div class="stepn">01</div><div><div class="stept">Collection</div><div class="stepd">Information is gathered through human sources, technical surveillance, tip lines, open-source monitoring and inter-agency cooperation.</div></div></div>
+        <div class="step"><div class="stepn">02</div><div><div class="stept">Processing and collation</div><div class="stepd">Raw information is processed, cross-referenced and collated into structured intelligence reports by trained analysts.</div></div></div>
+        <div class="step"><div class="stepn">03</div><div><div class="stept">Analysis and evaluation</div><div class="stepd">Analysts assess credibility, reliability and implications of intelligence. Threat assessments and crime threat analyses are produced.</div></div></div>
+        <div class="step"><div class="stepn">04</div><div><div class="stept">Dissemination</div><div class="stepd">Intelligence products are shared with commanders, detectives and relevant partner agencies to enable targeted operations.</div></div></div>
+        <div class="step"><div class="stepn">05</div><div><div class="stept">Feedback and review</div><div class="stepd">Outcomes of operations are fed back to improve future intelligence collection and analysis processes.</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="ic"><div class="ict">Anonymous crime tips</div><div class="icn"><a href="tel:0860010111">08600 10111</a></div><div class="icb">Crime Stop: your identity is fully protected. All tip-offs are handled by trained intelligence receivers and forwarded to the appropriate unit.</div></div>
+      <div class="ic"><div class="ict">What to report</div><ul class="mini-list"><li>Known drug houses or dealing points</li><li>Suspicious vehicles or individuals</li><li>Planned criminal activity or threats</li><li>Stolen goods or weapons caches</li><li>Gang or criminal syndicate information</li><li>Corruption by public officials</li></ul></div>
+      <div class="ic"><div class="ict">Rewards programme</div><div class="icb">Informants who provide information leading to significant arrests or the seizure of illegal firearms, drugs or stolen goods may be eligible for monetary rewards. All reward claims are handled confidentially.</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ========== LEGAL SERVICES ========== -->
+<div class="page" id="page-legal" data-title="Legal Services | SAPS">
+  <div class="ih"><div class="ihc"><div>
+    <a class="crumb" href="#home"><svg class="icon" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg>Back to home</a>
+    <div class="ey">Rights and justice</div><h1 class="st">Legal services</h1>
+    <p class="sl">Understanding your rights within the South African justice system. SAPS Legal Services provides guidance, oversight and access to justice for all citizens.</p>
+  </div><div class="ihico"><svg class="icon" aria-hidden="true"><use href="#i-scales"/></svg></div></div></div>
+  <div class="sw"><div class="d2">
+    <div class="db">
+      <p>South Africa has one of the most progressive constitutions in the world. The Bill of Rights enshrined in Chapter 2 of the Constitution guarantees every person fundamental rights, including rights related to arrest, detention and fair treatment by the police.</p>
+      <h3>Your rights when arrested</h3>
+      <ul><li>The right to remain silent and to be informed of this right</li><li>The right to have a legal practitioner of your choice present</li><li>The right to be informed promptly of the reason for your arrest</li><li>The right to be brought before a court within 48 hours</li><li>The right not to be tortured, treated cruelly or degraded</li><li>The right to communicate with and be visited by your spouse, partner, relative or medical practitioner</li><li>The right to a fair and public trial before an ordinary court</li></ul>
+      <h3>Filing a complaint against SAPS</h3>
+      <p>Complaints of misconduct, abuse of power or criminal conduct by SAPS members are investigated independently by the Independent Police Investigative Directorate (IPID). IPID has the mandate to investigate deaths in custody, torture, rape, corruption and other serious misconduct.</p>
+      <div class="hbox"><p>You have the right to lodge a complaint even if you are currently in custody or on bail. Retaliation against a complainant by any SAPS member is a criminal offence under the SAPS Act.</p></div>
+      <h3>Legal Aid South Africa</h3>
+      <p>If you cannot afford a private attorney, Legal Aid South Africa provides free legal representation to qualifying individuals in criminal matters. Contact Legal Aid on <a href="tel:0800110110" style="color:var(--gold)">0800 110 110</a> (toll-free) or visit your nearest Legal Aid office.</p>
+    </div>
+    <div>
+      <div class="ic"><div class="ict">IPID hotline</div><div class="icn"><a href="tel:0800587743">0800 587 743</a></div><div class="icb">Toll-free. Independent Police Investigative Directorate, for complaints about SAPS officer conduct.</div></div>
+      <div class="ic"><div class="ict">Legal Aid SA</div><div class="icn"><a href="tel:0800110110">0800 110 110</a></div><div class="icb">Free legal representation for those who cannot afford an attorney. Available for criminal matters.</div></div>
+      <div class="ic"><div class="ict">Civilian Secretariat for Police</div><div class="icb">The CSPS provides civilian oversight of SAPS and advises the Minister of Police on policy matters. Contact: <a href="tel:0123934000" style="color:var(--gold)">012 393 4000</a></div></div>
+      <div class="ic"><div class="ict">Bail information</div><div class="icb">Bail applications are heard in the magistrate's court. Schedule 1 offences allow for bail at station level. Schedule 5 and 6 offences require a court hearing. An attorney can guide you on the bail process.</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ========== COMMUNITY POLICING ========== -->
+<div class="page" id="page-community" data-title="Community Policing | SAPS">
+  <div class="ih"><div class="ihc"><div>
+    <a class="crumb" href="#home"><svg class="icon" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg>Back to home</a>
+    <div class="ey">Together we are safer</div><h1 class="st">Community policing</h1>
+    <p class="sl">Community Police Forums (CPFs) are the bridge between SAPS and the public: building trust, sharing information and co-creating safety strategies at the neighbourhood level.</p>
+  </div><div class="ihico"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></div></div></div>
+  <div class="sw"><div class="d2">
+    <div class="db">
+      <p>Section 18 of the South African Police Service Act (68 of 1995) mandates the establishment of a Community Police Forum (CPF) for every police station in South Africa. CPFs consist of ordinary community members who work alongside their local station commander to shape policing priorities in their area.</p>
+      <p>CPFs are not a vigilante group or policing unit. They are a structured community oversight and partnership body that holds the police accountable while also supporting their work.</p>
+      <h3>What CPFs do</h3>
+      <ul><li>Meet monthly with the station commander to discuss crime trends and policing plans</li><li>Represent community concerns and feedback to station management</li><li>Assist in planning and supporting crime prevention campaigns</li><li>Organise neighbourhood watch programmes and community patrols</li><li>Facilitate conflict resolution between the community and SAPS</li><li>Monitor the effectiveness of police service delivery</li><li>Establish sub-forums for schools, businesses and youth</li></ul>
+      <h3>How to join or start a CPF</h3>
+      <div class="ps">
+        <div class="step"><div class="stepn">01</div><div><div class="stept">Contact your station</div><div class="stepd">Visit your nearest SAPS station and ask for the CPF chairperson or the community liaison officer. They will provide details about existing CPF meetings in your area.</div></div></div>
+        <div class="step"><div class="stepn">02</div><div><div class="stept">Attend a CPF meeting</div><div class="stepd">CPF meetings are open to all community members. Meeting schedules are posted at the station notice board and on the local station's social media pages.</div></div></div>
+        <div class="step"><div class="stepn">03</div><div><div class="stept">Register as a member</div><div class="stepd">Fill in a CPF membership form. There is no cost to join. All community members aged 18 and over are eligible regardless of background.</div></div></div>
+        <div class="step"><div class="stepn">04</div><div><div class="stept">Stand for election</div><div class="stepd">CPF executive committees are elected annually by the community. Any registered CPF member in good standing may stand for an executive position.</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="ic"><div class="ict">CPFs nationwide</div><div class="icn">1,154</div><div class="icb">Active Community Police Forums, one for every registered SAPS station in South Africa.</div></div>
+      <div class="ic"><div class="ict">Neighbourhood watch</div><div class="icb">Neighbourhood Watch structures operate under the CPF and coordinate voluntary community patrols, CCTV monitoring and communication networks to deter crime at street level.</div></div>
+      <div class="ic"><div class="ict">School safety programme</div><div class="icb">SAPS partners with the Department of Education to station Resource Officers at schools, conduct drug awareness programmes and address bullying and gang recruitment targeting learners.</div></div>
+      <div class="ic"><div class="ict">Business Against Crime SA</div><div class="icb">BACSA is a public-private partnership through which businesses contribute resources, technology and expertise to support SAPS crime prevention efforts. Contact: <a href="tel:0118830717" style="color:var(--gold)">011 883 0717</a></div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ========== CLEARANCE CERTIFICATES ========== -->
+<div class="page" id="page-clearance" data-title="Police Clearance Certificates | SAPS">
+  <div class="ih"><div class="ihc"><div>
+    <a class="crumb" href="#home"><svg class="icon" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg>Back to home</a>
+    <div class="ey">Official documentation</div><h1 class="st">Police clearance certificates</h1>
+    <p class="sl">A Police Clearance Certificate (PCC) is an official document confirming whether or not you have a criminal record in South Africa. Required for employment, immigration, adoption and travel.</p>
+  </div><div class="ihico"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></div></div></div>
+  <div class="sw"><div class="d2">
+    <div class="db">
+      <p>The SAPS Criminal Record Centre (CRC) in Pretoria is responsible for issuing Police Clearance Certificates. The certificate reflects your criminal history (or absence thereof) based on fingerprint records held by SAPS.</p>
+      <p>PCCs are required for employment (especially in security, finance, education and government), visa and immigration applications, inter-country adoption and professional licensing by regulatory bodies.</p>
+      <h3>Application process</h3>
+      <div class="ps">
+        <div class="step"><div class="stepn">01</div><div><div class="stept">Complete the application form</div><div class="stepd">Download the SAPS 91(a) form from the SAPS website or collect it from any police station. Complete all sections clearly in block letters using black ink.</div></div></div>
+        <div class="step"><div class="stepn">02</div><div><div class="stept">Get fingerprints taken</div><div class="stepd">Visit any SAPS station to have your fingerprints taken on a SAPS fingerprint form. Some private providers are also accredited for PCC fingerprints. Cost: free at SAPS stations.</div></div></div>
+        <div class="step"><div class="stepn">03</div><div><div class="stept">Pay the application fee</div><div class="stepd">Payment of R130.00 is required via EFT or postal order payable to "SAPS". Proof of payment must accompany your application. No cash accepted by post.</div></div></div>
+        <div class="step"><div class="stepn">04</div><div><div class="stept">Submit your application</div><div class="stepd">Post your completed form, fingerprint form, certified ID copy and proof of payment to: Criminal Record Centre, Private Bag X308, Pretoria, 0001.</div></div></div>
+        <div class="step"><div class="stepn">05</div><div><div class="stept">Track your application</div><div class="stepd">Processing takes 20 to 30 working days for local applications. International applications may take 6 to 8 weeks. Track via email: <a href="mailto:crc@saps.gov.za" style="color:var(--gold)">crc@saps.gov.za</a></div><div class="stepdu">Local: 20 to 30 working days · International: 6 to 8 weeks</div></div></div>
+        <div class="step"><div class="stepn">06</div><div><div class="stept">Receive your certificate</div><div class="stepd">The certificate is mailed to the address provided on your application form. International applications can be collected at a South African embassy or consulate.</div></div></div>
+      </div>
+      <div class="hbox"><p><strong>Beware of scammers.</strong> Some people offer to process police clearance certificates for large fees. The official application process is managed exclusively by the SAPS Criminal Record Centre. Always use the official SAPS postal address or visit a registered SAPS station.</p></div>
+    </div>
+    <div>
+      <div class="ic"><div class="ict">Application fee</div><div class="icn">R130.00</div><div class="icb">Per application. Payable via EFT or postal order to "SAPS". Reference: your full name and ID number.</div></div>
+      <div class="ic"><div class="ict">Required documents</div><ul class="mini-list"><li>Completed SAPS 91(a) form</li><li>Certified copy of SA ID / passport</li><li>SAPS fingerprint form (ink fingerprints)</li><li>Proof of payment (R130)</li><li>Return postal address</li></ul></div>
+      <div class="ic"><div class="ict">EFT banking details</div><div class="kv"><div><span>Bank</span><strong>ABSA</strong></div><div><span>Account name</span><strong>SAPS Criminal Record Centre</strong></div><div><span>Branch code</span><strong>632005</strong></div><div><span>Reference</span><strong>Full name + ID number</strong></div></div></div>
+      <div style="margin-top:20px;display:flex;gap:12px;flex-direction:column">
+        <a class="btn btn-primary" href="https://www.saps.gov.za/" target="_blank" rel="noopener">Get the SAPS 91(a) form</a>
+        <a class="btn btn-outline" href="mailto:crc@saps.gov.za?subject=Clearance%20certificate%20application%20status">Track my application</a>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fg">
+    <div class="fa">
+      <a href="#home" class="brand" aria-label="SAPS home">
+        <svg class="emblem" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 3l24 8v17c0 14-10 25-24 33C18 53 8 42 8 28V11l24-8z" fill="#FDB913"/><path d="M32 12l3.600 8.500 9.200.8-7 6 2.200 9L32 31.500 24 36.300l2.200-9-7-6 9.200-.8L32 12z" fill="#0A1C45"/></svg>
+        <div class="brand-text"><strong>SAPS</strong><span>South African Police Service</span></div>
+      </a>
+      <p>The South African Police Service is committed to preventing, combating and investigating crime, maintaining public order, and ensuring the safety and security of all people in South Africa.</p>
+    </div>
+    <div class="fc"><h4>Services</h4><ul>
+      <li><a href="#report">Report a crime</a></li>
+      <li><a href="#clearance">Clearance certificate</a></li>
+      <li><a href="#stations">Find a station</a></li>
+      <li><a href="#report">Missing persons</a></li>
+      <li><a href="#legal">Legal services</a></li>
+    </ul></div>
+    <div class="fc"><h4>Organisation</h4><ul>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#community">Community policing</a></li>
+      <li><a href="#careers">Career opportunities</a></li>
+      <li><a href="https://www.saps.gov.za/" target="_blank" rel="noopener">Tenders and procurement</a></li>
+      <li><a href="https://www.saps.gov.za/" target="_blank" rel="noopener">Annual reports</a></li>
+    </ul></div>
+    <div class="fc"><h4>Connect</h4><ul>
+      <li><a href="#news">Media centre</a></li>
+      <li><a href="https://www.saps.gov.za/" target="_blank" rel="noopener">Publications</a></li>
+      <li><a href="https://www.saps.gov.za/" target="_blank" rel="noopener">PAIA requests</a></li>
+      <li><a href="#legal">Complaints (IPID)</a></li>
+      <li><a href="mailto:crc@saps.gov.za">Contact directory</a></li>
+    </ul></div>
+  </div>
+  <div class="fb">
+    <p>© <span id="year">2026</span> South African Police Service · Republic of South Africa · All rights reserved</p>
+    <div class="flag" aria-label="South African flag" role="img"><i style="background:#000;flex:0 0 8px"></i><i style="background:#FFB612"></i><i style="background:#007A4D"></i><i style="background:#fff;flex:0 0 4px"></i><i style="background:#DE3831"></i><i style="background:#002395"></i></div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top"><svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></button>
+
+<dialog id="modal" aria-labelledby="mTitle">
+  <button class="dlg-close" id="mClose" aria-label="Close">&times;</button>
+  <span class="ntag" id="mTag"></span>
+  <h2 id="mTitle"></h2>
+  <p id="mBody"></p>
+  <div class="dlg-actions" id="mActions"></div>
+</dialog>
+
+<script>
+(function () {
+  var NEWS = [
+    { tag: 'Operations · Nationwide', title: 'Operation Shanela drives down contact crime rates across Gauteng', meta: '19 March 2026 · SAPS Communications', icon: 'i-news',
+      body: 'Intensified, intelligence-led operations have focused on crime hot spots, with roadblocks, raids and visible patrols running day and night. Commanders credit closer cooperation with community police forums.' },
+    { tag: 'Arrest · Western Cape', title: 'Major drug syndicate dismantled in Cape Town operation', meta: '18 March 2026', icon: 'i-lock',
+      body: 'A multi-unit operation involving detectives, crime intelligence and the K9 unit led to a series of arrests and the seizure of illegal substances. Investigations continue.' },
+    { tag: 'Community · KZN', title: 'New Community Police Forum training initiative launches in KwaZulu-Natal', meta: '17 March 2026', icon: 'i-megaphone',
+      body: 'The programme equips CPF members with skills in crime prevention, conflict resolution and working with station commanders. Sessions are open to registered CPF members.' }
+  ];
+  var STATIONS = [
+    { name: 'Johannesburg Central', area: 'Gauteng Province · CBD', tel: '011 220 5000' },
+    { name: 'Cape Town Central', area: 'Western Cape Province · CBD', tel: '021 467 8000' },
+    { name: 'Durban Central', area: 'KwaZulu-Natal Province', tel: '031 325 9000' },
+    { name: 'Pretoria Central', area: 'Gauteng Province · Tshwane', tel: '012 353 6000' },
+    { name: 'Port Elizabeth', area: 'Eastern Cape Province', tel: '041 398 1000' }
+  ];
+  var VACANCIES = [
+    { pos: 'Constable, Visible Policing (x400)', div: 'Visible Policing', prov: 'Gauteng', close: '30 Apr 2026', status: 'new' },
+    { pos: 'Detective Constable, FCS Unit', div: 'Detective Services', prov: 'Western Cape', close: '15 Apr 2026', status: 'urgent' },
+    { pos: 'Forensic Analyst, DNA Lab', div: 'Forensic Services', prov: 'KwaZulu-Natal', close: '20 Apr 2026', status: 'open' },
+    { pos: 'IT Specialist, Cybercrime Unit', div: 'Detective Services', prov: 'Gauteng', close: '25 Apr 2026', status: 'new' },
+    { pos: 'Crime Intelligence Analyst', div: 'Crime Intelligence', prov: 'Limpopo', close: '10 Apr 2026', status: 'urgent' },
+    { pos: 'Human Resources Officer', div: 'Corporate Services', prov: 'Eastern Cape', close: '5 May 2026', status: 'open' },
+    { pos: 'K9 Handler, Drug Detection', div: 'Visible Policing', prov: 'North West', close: '28 Apr 2026', status: 'new' },
+    { pos: 'Financial Crimes Investigator', div: 'Hawks / DPCI', prov: 'Gauteng', close: '18 Apr 2026', status: 'urgent' }
+  ];
+  var STATUS_LABEL = { 'new': 'New', urgent: 'Urgent', open: 'Open' };
+  var PAGES = ['home', 'careers', 'detective', 'visible', 'intelligence', 'legal', 'community', 'clearance'];
+
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function icon(id) { return '<svg class="icon" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
+
+  var nav = $('nav'), toggle = $('#menuToggle'), links = $('#navLinks'), toTop = $('#toTop');
+  var modal = $('#modal');
+
+  /* ---------- Modal ---------- */
+  function openModal(o) {
+    $('#mTag').textContent = o.tag || '';
+    $('#mTag').style.display = o.tag ? '' : 'none';
+    $('#mTitle').textContent = o.title;
+    $('#mBody').textContent = o.body;
+    $('#mActions').innerHTML = o.actions || '';
+    if (typeof modal.showModal === 'function') modal.showModal(); else modal.setAttribute('open', '');
+  }
+  $('#mClose').addEventListener('click', function () { modal.close(); });
+  modal.addEventListener('click', function (e) { if (e.target === modal) modal.close(); });
+
+  /* ---------- News ---------- */
+  $('#newsGrid').innerHTML = NEWS.map(function (n, i) {
+    return '<button class="nc" data-news="' + i + '"><div class="ncimg">' + icon(n.icon) + '</div><div class="ncb"><span class="ntag">' + esc(n.tag) + '</span><div class="nhead">' + esc(n.title) + '</div><div class="nmeta">' + esc(n.meta) + '</div></div></button>';
+  }).join('');
+  $('#newsGrid').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-news]'); if (!b) return;
+    var n = NEWS[+b.dataset.news];
+    openModal({ tag: n.tag, title: n.title, body: n.body + ' (Summary for this redesign. See the official SAPS site for full statements.)',
+      actions: '<a class="btn btn-primary btn-sm" href="https://www.saps.gov.za/" target="_blank" rel="noopener">Official SAPS site</a>' });
+  });
+
+  /* ---------- Stations ---------- */
+  var stList = $('#stationList'), stEmpty = $('#stationEmpty'), stSearch = $('#stationSearch');
+  function renderStations() {
+    var q = stSearch.value.trim().toLowerCase();
+    var rows = STATIONS.filter(function (s) { return (s.name + ' ' + s.area).toLowerCase().indexOf(q) !== -1; });
+    stList.innerHTML = rows.map(function (s, i) {
+      var tel = s.tel.replace(/\s/g, '');
+      var map = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('SAPS ' + s.name + ' police station');
+      return '<li class="sti"><div class="stn">' + String(i + 1).padStart(2, '0') + '</div><div><div class="stname">' + esc(s.name) + '</div><div class="starea">' + esc(s.area) + '</div></div>' +
+        '<div class="stact"><a class="chip" href="tel:' + tel + '">' + icon('i-phone') + esc(s.tel) + '</a><a class="chip" href="' + map + '" target="_blank" rel="noopener">' + icon('i-pin') + 'Map</a></div></li>';
+    }).join('');
+    stEmpty.style.display = rows.length ? 'none' : 'block';
+  }
+  stSearch.addEventListener('input', renderStations);
+  renderStations();
+
+  /* ---------- Vacancies ---------- */
+  var vBody = $('#vacBody'), vCount = $('#vacCount'), vSearch = $('#vSearch'), vDiv = $('#vDiv'), vProv = $('#vProv');
+  function uniq(key) { return VACANCIES.map(function (v) { return v[key]; }).filter(function (x, i, a) { return a.indexOf(x) === i; }).sort(); }
+  uniq('div').forEach(function (d) { vDiv.insertAdjacentHTML('beforeend', '<option>' + esc(d) + '</option>'); });
+  uniq('prov').forEach(function (p) { vProv.insertAdjacentHTML('beforeend', '<option>' + esc(p) + '</option>'); });
+  function renderVacancies() {
+    var q = vSearch.value.trim().toLowerCase();
+    var rows = VACANCIES.map(function (v, i) { v.i = i; return v; }).filter(function (v) {
+      return (!vDiv.value || v.div === vDiv.value) && (!vProv.value || v.prov === vProv.value) && (!q || (v.pos + ' ' + v.div + ' ' + v.prov).toLowerCase().indexOf(q) !== -1);
+    });
+    vBody.innerHTML = rows.length ? rows.map(function (v) {
+      return '<tr><td class="vt">' + esc(v.pos) + '</td><td>' + esc(v.div) + '</td><td>' + esc(v.prov) + '</td><td>' + esc(v.close) + '</td><td><span class="vb ' + v.status + '">' + STATUS_LABEL[v.status] + '</span></td><td><button class="btn btn-outline btn-sm" data-apply="' + v.i + '">Apply</button></td></tr>';
+    }).join('') : '<tr><td colspan="6" style="text-align:center;padding:36px">No vacancies match your filters.</td></tr>';
+    vCount.textContent = 'Showing ' + rows.length + ' of ' + VACANCIES.length + ' vacancies';
+  }
+  [vSearch, vDiv, vProv].forEach(function (el) { el.addEventListener('input', renderVacancies); });
+  renderVacancies();
+  vBody.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-apply]'); if (!b) return;
+    var v = VACANCIES[+b.dataset.apply];
+    openModal({ tag: v.div + ' · ' + v.prov, title: v.pos,
+      body: 'Closing date: ' + v.close + '. Have your Z83 form, certified ID and qualifications ready, then complete your application through the official SAPS recruitment channels.',
+      actions: '<a class="btn btn-primary btn-sm" href="https://www.saps.gov.za/" target="_blank" rel="noopener">Continue on the SAPS site</a><a class="btn btn-outline btn-sm" href="https://www.dpsa.gov.za/" target="_blank" rel="noopener">Z83 form</a>' });
+  });
+  $$('.dc[data-division]').forEach(function (c) {
+    c.addEventListener('click', function () {
+      vDiv.value = c.dataset.division; vSearch.value = ''; vProv.value = '';
+      renderVacancies();
+      $('#vacancies').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  /* ---------- Report form ---------- */
+  var rf = $('#reportForm'), rs = $('#reportStatus');
+  function check(el, ok) { el.closest('.ff').classList.toggle('invalid', !ok); return ok; }
+  rf.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = rf.elements;
+    var a = check(f.type, !!f.type.value);
+    var b = check(f.loc, f.loc.value.trim().length > 2);
+    var c = check(f.desc, f.desc.value.trim().length >= 20);
+    rs.className = 'form-status';
+    if (a && b && c) {
+      var ref = 'TIP-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+      rs.innerHTML = '<strong>Report received.</strong> Your reference is <strong>' + ref + '</strong>. This is a demo form and nothing was sent. In a real emergency call <a href="tel:10111" style="color:inherit">10111</a>.';
+      rs.className = 'form-status ok';
+      rf.reset();
+    } else {
+      rf.querySelector('.invalid input, .invalid select, .invalid textarea').focus();
+    }
+  });
+  rf.addEventListener('input', function (e) { var g = e.target.closest('.ff'); if (g) g.classList.remove('invalid'); });
+
+  /* ---------- Ticker, counters, year ---------- */
+  var track = $('#tickerTrack'); track.innerHTML += track.innerHTML + track.innerHTML + track.innerHTML;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function runCounters() {
+    $$('.count-up').forEach(function (el) {
+      var target = +el.dataset.target;
+      if (reduce) return;
+      el.textContent = '0';
+      var start = Date.now();
+      var t = setInterval(function () {
+        var p = Math.min((Date.now() - start) / 1400, 1);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US');
+        if (p >= 1) clearInterval(t);
+      }, 30);
+    });
+  }
+  $('#year').textContent = new Date().getFullYear();
+
+  /* ---------- Mobile menu ---------- */
+  function setMenu(open) { links.classList.toggle('open', open); toggle.setAttribute('aria-expanded', String(open)); }
+  toggle.addEventListener('click', function () { setMenu(!links.classList.contains('open')); });
+  links.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+  window.addEventListener('resize', function () { if (window.innerWidth > 1180) setMenu(false); });
+
+  /* ---------- Router (hash based) ---------- */
+  var current = '';
+  function showPage(id) {
+    if (id === current) return false;
+    $$('.page').forEach(function (p) { p.classList.remove('active'); });
+    var el = $('#page-' + id); el.classList.add('active');
+    document.title = el.dataset.title;
+    current = id;
+    if (id === 'home') runCounters();
+    return true;
+  }
+  function route() {
+    var h = decodeURIComponent(location.hash.replace('#', '')) || 'home';
+    if (h === 'main') h = current || 'home';
+    if (PAGES.indexOf(h) !== -1) {
+      var changed = showPage(h);
+      if (changed || h !== 'home') window.scrollTo(0, 0);
+      else window.scrollTo(0, 0);
+    } else {
+      var target = document.getElementById(h);
+      if (target && $('#page-home').contains(target)) {
+        var changed2 = showPage('home');
+        setTimeout(function () { target.scrollIntoView({ behavior: changed2 ? 'auto' : 'smooth' }); }, changed2 ? 30 : 0);
+      } else { showPage('home'); window.scrollTo(0, 0); }
+    }
+    updateActive();
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ---------- Active nav + back to top ---------- */
+  var spyIds = ['services', 'report', 'news', 'stations'];
+  function updateActive() {
+    var key = current === 'home' ? 'home' : (current === 'careers' ? 'careers' : 'services');
+    if (current === 'home') {
+      spyIds.forEach(function (id) { var s = document.getElementById(id); if (s && s.getBoundingClientRect().top <= 140) key = id; });
+      var lead = document.getElementById('leadership');
+      if (lead && lead.getBoundingClientRect().top <= 140) key = 'stations';
+    }
+    $$('[data-nav]', links).forEach(function (a) { a.classList.toggle('active', a.dataset.nav === key); });
+  }
+  window.addEventListener('scroll', function () { toTop.classList.toggle('show', window.scrollY > 700); updateActive(); }, { passive: true });
+  toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  $('#skipLink').addEventListener('click', function (e) { e.preventDefault(); $('#main').setAttribute('tabindex', '-1'); $('#main').focus(); });
+
+  route();
+})();
+</script>
+</body>
+</html>
